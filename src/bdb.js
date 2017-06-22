@@ -1,12 +1,11 @@
-// TODO: Import specific modules
 import * as driver from 'bigchaindb-driver'
 
 
 export const BDB_SERVER_URL = process.env.REACT_APP_BDB_SERVER_URL || 'http://localhost:9984'
-console.log('BDB_SERVER_URL', BDB_SERVER_URL)
+console.log('BDB_SERVER_URL', BDB_SERVER_URL, driver)
 export const BDB_API_PATH = `${BDB_SERVER_URL}/api/v1/`
 
-const conn = new driver.Connection(BDB_API_PATH)
+const conn = new driver.Connection(BDB_API_PATH, { 'Content-Type': 'application/json' })
 
 export const keypair = (seed) => new driver.Ed25519Keypair(seed.slice(0, 32))
 
