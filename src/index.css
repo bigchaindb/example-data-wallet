@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.full-page {
+    background-size: cover;
+    height: 100vh;
+    padding: 10% 0 10px;
+}
+
+.full-page .main {
+    margin: 0 auto;
+    padding: 50px 10%;
+    color: white;
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+.full-page .main p {
+    font-size: 1.1em;
+}
+
+.full-page .ui.form .field > label {
+    color: white;
+}
+
+.ui.secondary.pointing.menu {
+    background: #2185D0;
+}
+
+.ui.secondary.pointing.menu .item {
+    color: white !important;
+}
