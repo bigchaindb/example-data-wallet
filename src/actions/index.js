@@ -1,6 +1,6 @@
 import { push } from 'react-router-redux'
 import bip39 from 'bip39'
-import * as bdb from '../bdb'
+import * as bdb from '../bdb' // eslint-disable-line import/no-namespace
 
 const appId = 'app'
 
@@ -45,7 +45,7 @@ export function setSeed(seed) {
 
         bdb.getUnspents(keypair.publicKey)
             .then(txs => Promise.all(txs.map(mapTransactionToAction.bind(null, dispatch))))
-            .then(_ => {
+            .then(_ => { // eslint-disable-line no-unused-vars
                 const state = getState()
                 const hasProfile = state.profiles.data[state.identity.keypair.publicKey]
 
@@ -58,15 +58,12 @@ export function setSeed(seed) {
     }
 }
 
-export function fetchProfile(publicKey) {
-}
-
 export function submitProfile(profile) {
     return function (dispatch, getState) {
         const { publicKey, privateKey } = getState().identity.keypair
 
         bdb.publish(publicKey, privateKey, { type: `${appId}:profile`, profile })
-            .then(_ => {
+            .then(_ => { // eslint-disable-line no-unused-vars
                 dispatch({
                     type: 'ADD_PROFILE',
                     profile: {
@@ -75,7 +72,7 @@ export function submitProfile(profile) {
                     }
                 })
             })
-            .then(_ => {
+            .then(_ => { // eslint-disable-line no-unused-vars
                 dispatch(push(`/profiles/${publicKey}`))
             })
     }

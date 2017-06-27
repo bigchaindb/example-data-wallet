@@ -1,11 +1,11 @@
 import * as driver from 'bigchaindb-driver'
 
 
-export const BDB_SERVER_URL = process.env.REACT_APP_BDB_SERVER_URL || 'http://localhost:9984'
+export const BDB_SERVER_URL = process.env.REACT_APP_BDB_SERVER_URL || 'http://localhost:49984'
 console.log('BDB_SERVER_URL', BDB_SERVER_URL, driver)
 export const BDB_API_PATH = `${BDB_SERVER_URL}/api/v1/`
 
-const conn = new driver.Connection(BDB_API_PATH, { 'Content-Type': 'application/json' })
+const conn = new driver.Connection(BDB_API_PATH)
 
 export const keypair = (seed) => new driver.Ed25519Keypair(seed.slice(0, 32))
 
@@ -31,11 +31,8 @@ export const publish = (publicKey, privateKey, payload) => {
 
 export const getUnspents = (publicKey, callback) =>
     conn
-        .listOutputs({
-            public_key: publicKey,
-            unspent: 'true'
-        })
-        .then(unspents => unspents.map(elem => elem.split('/')[2]))
+        .listOutputs(publicKey)
+        .then(unspents => unspents.map(elem => elem.transaction_id))
 
 
 export const getTransaction = (txId) =>

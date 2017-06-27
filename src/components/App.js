@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { Route } from 'react-router-dom'
 import { Container } from 'semantic-ui-react'
@@ -8,7 +9,7 @@ import ProfileLoader from '../containers/ProfileLoader'
 import MenuLoader from '../containers/MenuLoader'
 import LogoutLoader from '../containers/LogoutLoader'
 import DashboardLoader from '../containers/DashboardLoader'
-
+/* eslint-enable no-unused-vars */
 
 const App = () => (
     <div>
