@@ -1,12 +1,11 @@
 import { connect } from 'react-redux'
 import Dashboard from '../components/Dashboard'
-import { fetchProfile } from '../actions'
-
+import { mapPublicKeyToProfile } from '../actions/index'
 
 export default connect(
 
     (state, ownProps) => ({
-        ...state.profiles.data[ownProps.match.params.publicKey],
+        ...mapPublicKeyToProfile(ownProps.match.params.publicKey, state),
         publicKey: ownProps.match.params.publicKey
     }),
 

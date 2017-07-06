@@ -3,7 +3,7 @@ import { Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 
-const Landing = ({name}) => (
+const Landing = () => (
     <div className="full-page">
         <div className="main">
             <h1>BigchainDB Boilerplate</h1>

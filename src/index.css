@@ -10,12 +10,21 @@ body {
     padding: 10% 0 10px;
 }
 
+.full-page .main--white,
 .full-page .main {
     margin: 0 auto;
     padding: 50px 10%;
+}
+
+.full-page .main {
     color: white;
     background: rgba(0, 0, 0, 0.9);
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+.full-page .main--white {
+    color: rgba(0, 0, 0, 0.9);
+    background: white;
 }
 
 .full-page .main p {
@@ -32,4 +41,130 @@ body {
 
 .ui.secondary.pointing.menu .item {
     color: white !important;
+}
+
+.cssload-spinner {
+	position: absolute;
+	width: 33px;
+	height: 33px;
+	left: 50%;
+	margin-left: -17px;
+	margin-top: -17px;
+}
+.cssload-spinner:after, .cssload-spinner:before {
+	position: absolute;
+	content: "";
+	border: 2px solid rgba(0, 0, 0, 0.9);
+	width: 31px;
+	height: 31px;
+}
+.cssload-spinner:after {
+	animation: cssload-spinner1 2.88s linear infinite;
+    -o-animation: cssload-spinner1 2.88s linear infinite;
+    -ms-animation: cssload-spinner1 2.88s linear infinite;
+    -webkit-animation: cssload-spinner1 2.88s linear infinite;
+    -moz-animation: cssload-spinner1 2.88s linear infinite;
+}
+.cssload-spinner:before {
+	width: 43px;
+	height: 43px;
+	margin-left: -6.5px;
+	margin-top: -6.5px;
+	animation: cssload-spinner2 2.88s linear infinite;
+    -o-animation: cssload-spinner2 2.88s linear infinite;
+    -ms-animation: cssload-spinner2 2.88s linear infinite;
+    -webkit-animation: cssload-spinner2 2.88s linear infinite;
+    -moz-animation: cssload-spinner2 2.88s linear infinite;
+}
+
+
+
+@keyframes cssload-spinner1 {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@-o-keyframes cssload-spinner1 {
+	from {
+		-o-transform: rotate(0deg);
+	}
+	to {
+		-o-transform: rotate(360deg);
+	}
+}
+
+@-ms-keyframes cssload-spinner1 {
+	from {
+		-ms-transform: rotate(0deg);
+	}
+	to {
+		-ms-transform: rotate(360deg);
+	}
+}
+
+@-webkit-keyframes cssload-spinner1 {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@-moz-keyframes cssload-spinner1 {
+	from {
+		-moz-transform: rotate(0deg);
+	}
+	to {
+		-moz-transform: rotate(360deg);
+	}
+}
+
+@keyframes cssload-spinner2 {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(-360deg);
+	}
+}
+
+@-o-keyframes cssload-spinner2 {
+	from {
+		-o-transform: rotate(0deg);
+	}
+	to {
+		-o-transform: rotate(-360deg);
+	}
+}
+
+@-ms-keyframes cssload-spinner2 {
+	from {
+		-ms-transform: rotate(0deg);
+	}
+	to {
+		-ms-transform: rotate(-360deg);
+	}
+}
+
+@-webkit-keyframes cssload-spinner2 {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(-360deg);
+	}
+}
+
+@-moz-keyframes cssload-spinner2 {
+	from {
+		-moz-transform: rotate(0deg);
+	}
+	to {
+		-moz-transform: rotate(-360deg);
+	}
 }

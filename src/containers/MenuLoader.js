@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
 import AppMenu from '../components/Menu'
-
+import { mapPublicKeyToProfile } from '../actions/index'
 
 export default connect(
     state => ({
-        ...state.profiles.data[state.identity.keypair.publicKey],
+        ...mapPublicKeyToProfile(state.identity.keypair.publicKey, state)
     })
 )(AppMenu)

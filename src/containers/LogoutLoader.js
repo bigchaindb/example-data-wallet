@@ -3,4 +3,4 @@ import { connect } from 'react-redux'
 import { logout } from '../actions'
 
 
-export default connect()(() => { logout(); return <p>logout...</p>})
+export default connect()(() => { logout(); return <p>logout...</p> })

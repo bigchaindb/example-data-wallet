@@ -1,8 +1,22 @@
 import { push } from 'react-router-redux'
 import bip39 from 'bip39'
+
 import * as bdb from '../bdb' // eslint-disable-line import/no-namespace
+import Asset from './asset'
 
 const appId = 'app'
+
+
+export const REQUEST_ASYNC = 'REQUEST_ASYNC'
+export const RECEIVE_ASYNC = 'RECEIVE_ASYNC'
+
+export const requestAsync = () => ({
+    type: REQUEST_ASYNC
+})
+
+export const receiveAsync = () => ({
+    type: RECEIVE_ASYNC
+})
 
 export function generateMnemonic() {
     return {
@@ -11,30 +25,12 @@ export function generateMnemonic() {
     }
 }
 
-function mapTransactionToAction(dispatch, txid) {
-    return bdb.getTransaction(txid)
-        .then(tx => {
-            switch (tx.asset.data.type) {
-                case `${appId}:profile`:
-                    dispatch({
-                        type: 'ADD_PROFILE',
-                        profile: {
-                            ...tx.asset.data.profile,
-                            _pk: tx.inputs[0].owners_before[0],
-                            _tx: tx.id
-                        }
-                    })
-                    break
-                default:
-                    console.log(`Dunno what to do with tx ${tx.id}`, tx)
-            }
-        })
-}
+export const profileAsset = new Asset(appId, 'profile')
 
 export function setSeed(seed) {
     localStorage.setItem('seed', seed)
 
-    return function (dispatch, getState) {
+    return (dispatch, getState) => {
         const keypair = bdb.keypair(bip39.mnemonicToSeed(seed))
 
         dispatch({
@@ -43,39 +39,44 @@ export function setSeed(seed) {
             privateKey: keypair.privateKey
         })
 
-        bdb.getUnspents(keypair.publicKey)
-            .then(txs => Promise.all(txs.map(mapTransactionToAction.bind(null, dispatch))))
-            .then(_ => { // eslint-disable-line no-unused-vars
-                const state = getState()
-                const hasProfile = state.profiles.data[state.identity.keypair.publicKey]
 
-                if (hasProfile) {
-                    dispatch(push(`/profiles/${state.identity.keypair.publicKey}`))
+        bdb.connect((ev) => {
+            profileAsset.updateStore(ev.asset_id, dispatch, getState)
+        })
+
+        dispatch(requestAsync())
+        profileAsset.load(dispatch, getState)
+            .then(() => {
+                const state = getState()
+                const hasProfile = Object.values(state.profiles)
+                    .filter(profile => profile._pk === state.identity.keypair.publicKey)
+
+                if (hasProfile.length) {
+                    dispatch(push(`/profiles/${keypair.publicKey}`))
                 } else {
                     dispatch(push('/onboarding'))
                 }
+                dispatch(receiveAsync())
             })
     }
 }
 
 export function submitProfile(profile) {
-    return function (dispatch, getState) {
-        const { publicKey, privateKey } = getState().identity.keypair
+    return (dispatch, getState) => {
+        const { publicKey } = getState().identity.keypair
 
-        bdb.publish(publicKey, privateKey, { type: `${appId}:profile`, profile })
-            .then(_ => { // eslint-disable-line no-unused-vars
-                dispatch({
-                    type: 'ADD_PROFILE',
-                    profile: {
-                        ...profile,
-                        _pk: publicKey
-                    }
-                })
-            })
-            .then(_ => { // eslint-disable-line no-unused-vars
-                dispatch(push(`/profiles/${publicKey}`))
-            })
+        profileAsset.create(profile, dispatch, getState)
+            .then(() => dispatch(push(`/profiles/${publicKey}`)))
     }
+}
+
+export function mapPublicKeyToProfile(publicKey, state) {
+    const filteredProfiles = Object.values(state.profiles)
+        .filter(profile => profile._pk === publicKey)
+    if (filteredProfiles.length) {
+        return filteredProfiles[0]
+    }
+    return null
 }
 
 export function logout() {

@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
 import { Button, Form } from 'semantic-ui-react'
-
+/* eslint-enable no-unused-vars */
 
 const Profile = ({ handleSubmit }) => (
     <div className="full-page">
@@ -12,7 +13,7 @@ const Profile = ({ handleSubmit }) => (
             <Form onSubmit={handleSubmit} autoComplete="off">
                 <Form.Field>
                     <label>Name</label>
-                    <Field name="name" component="input"
+                    <Field name="name" component="input" required
                            type="text" placeholder='Your name or your company name' />
                 </Form.Field>
                 <Button primary type='submit'>Sign and submit</Button>

@@ -1,17 +1,11 @@
-const initialState = {
-    data: {} // publicKey -> profile
-}
-
-const profiles = (state = initialState, action) => {
+const profiles = (state = {}, action) => {
     switch (action.type) {
         case 'ADD_PROFILE':
+        case 'UPDATE_PROFILE':
             return Object.assign({}, state, {
-                data: {
-                    ...state.data,
-                    [action.profile._pk]: action.profile
-                }
+                ...state,
+                [action.profile._tx]: action.profile
             })
-
         default:
             return state
     }

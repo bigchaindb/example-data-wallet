@@ -1,15 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class Dashboard extends Component {
-    render() {
-        const { name, publicKey } = this.props
+const Dashboard = ({ name, publicKey }) => (
+    <div>
+        <h1>{name}</h1>
+        <h3>{publicKey}</h3>
+        <hr/>
+    </div>
+)
 
-        return (
-            <div>
-                <h1>{name}</h1>
-                <h3>{publicKey}</h3>
-                <hr/>
-            </div>
-        )
-    }
-}
+export default Dashboard
