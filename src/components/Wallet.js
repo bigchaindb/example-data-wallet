@@ -47,7 +47,7 @@ class Wallet extends Component {
                                 Save them somewhere safe and secret.</p> : null
                         }
 
-                        <Button className="button" type='submit'>Submit</Button>
+                        <Button className="button primary" type='submit'>Submit</Button>
                         <Button type='button'
                                 onClick={this.handleGenerated.bind(this)}>
                             Generate a new wallet
