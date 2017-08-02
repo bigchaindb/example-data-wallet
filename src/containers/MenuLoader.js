@@ -4,6 +4,7 @@ import { mapPublicKeyToProfile } from '../actions/index'
 
 export default connect(
     state => ({
-        ...mapPublicKeyToProfile(state.identity.keypair.publicKey, state)
+        ...mapPublicKeyToProfile(state.identity.keypair.publicKey, state),
+        publicKey: state.identity.keypair.publicKey
     })
 )(AppMenu)

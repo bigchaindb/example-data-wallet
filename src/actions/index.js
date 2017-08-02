@@ -70,11 +70,25 @@ export function submitProfile(profile) {
     }
 }
 
+export function editProfile(profile) {
+    return (dispatch, getState) => {
+        const { publicKey } = getState().identity.keypair
+        const state = getState()
+        const hasProfile = Object.values(state.profiles)
+            .filter(profile => profile._pk === state.identity.keypair.publicKey)
+        const txId = hasProfile[0].provenance[hasProfile[0].provenance.length-1]._tx;
+        bdb.getTransaction(txId).then(tx => {
+          profileAsset.transfer(tx, publicKey, profile, dispatch, getState)
+              .then(() => dispatch(push(`/profiles/${publicKey}`)))
+        })
+    }
+}
+
 export function mapPublicKeyToProfile(publicKey, state) {
-    const filteredProfiles = Object.values(state.profiles)
+    const filteredProfile = Object.values(state.profiles)
         .filter(profile => profile._pk === publicKey)
-    if (filteredProfiles.length) {
-        return filteredProfiles[0]
+    if (filteredProfile.length) {
+        return filteredProfile[0].provenance[filteredProfile[0].provenance.length-1].metadata.data;
     }
     return null
 }

@@ -31,7 +31,8 @@ export default class Asset {
             privateKey,
             assetPayload,
             {
-                data: metadata
+                type: this.assetType,
+                data: assetData
             })
             .then(tx => this.updateStore(tx.id, dispatch, getState))
             .catch(err => console.error(err))
