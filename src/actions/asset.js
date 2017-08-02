@@ -30,10 +30,8 @@ export default class Asset {
             publicKey,
             privateKey,
             assetPayload,
-            {
-                type: this.assetType,
-                data: assetData
-            })
+            metadata
+        )
             .then(tx => this.updateStore(tx.id, dispatch, getState))
             .catch(err => console.error(err))
     }
@@ -46,10 +44,7 @@ export default class Asset {
             publicKey,
             privateKey,
             toPublicKey,
-            {
-                type: this.assetType,
-                data: payload
-            }
+            payload
         )
         .then(() => {
             const assetId = bdb.getAssetId(transaction)
@@ -88,7 +83,7 @@ export default class Asset {
                 timestamp: tx.votes[0].vote.timestamp,
                 from: tx.inputs,
                 to: tx.outputs,
-                _tx: tx.id
+                _txId: tx.id
             }
         ))
 
@@ -98,15 +93,19 @@ export default class Asset {
         switch (action) {
             case 'ADD':
                 dispatchObject[this.assetType] = {
-                    ...asset.asset.data[this.assetType],
+                    assetData: asset.asset.data[this.assetType],
+                    metaData: unspent.metadata,
                     _pk: asset.inputs[0].owners_before[0],
-                    _tx: asset.id,
+                    _txId: asset.id,
+                    _txLastId: unspent.id,
                     provenance
                 }
                 return dispatch(dispatchObject)
             case 'UPDATE':
                 dispatchObject[this.assetType] = {
                     ...state[this.assetCollection][bdb.getAssetId(unspent)],
+                    metaData: unspent.metadata,
+                    _txLastId: unspent.id,
                     provenance
                 }
                 return dispatch(dispatchObject)

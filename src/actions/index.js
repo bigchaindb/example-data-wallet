@@ -65,7 +65,7 @@ export function submitProfile(profile) {
     return (dispatch, getState) => {
         const { publicKey } = getState().identity.keypair
 
-        profileAsset.create(profile, dispatch, getState)
+        profileAsset.create(profile, dispatch, getState, profile)
             .then(() => dispatch(push(`/profiles/${publicKey}`)))
     }
 }
@@ -75,11 +75,11 @@ export function editProfile(profile) {
         const { publicKey } = getState().identity.keypair
         const state = getState()
         const hasProfile = Object.values(state.profiles)
-            .filter(profile => profile._pk === state.identity.keypair.publicKey)
-        const txId = hasProfile[0].provenance[hasProfile[0].provenance.length-1]._tx;
+            .filter(_profile => _profile._pk === state.identity.keypair.publicKey)
+        const txId = hasProfile[0]._txLastId
         bdb.getTransaction(txId).then(tx => {
-          profileAsset.transfer(tx, publicKey, profile, dispatch, getState)
-              .then(() => dispatch(push(`/profiles/${publicKey}`)))
+            profileAsset.transfer(tx, publicKey, profile, dispatch, getState)
+                .then(() => dispatch(push(`/profiles/${publicKey}`)))
         })
     }
 }
@@ -88,7 +88,7 @@ export function mapPublicKeyToProfile(publicKey, state) {
     const filteredProfile = Object.values(state.profiles)
         .filter(profile => profile._pk === publicKey)
     if (filteredProfile.length) {
-        return filteredProfile[0].provenance[filteredProfile[0].provenance.length-1].metadata.data;
+        return filteredProfile[0].metaData
     }
     return null
 }
