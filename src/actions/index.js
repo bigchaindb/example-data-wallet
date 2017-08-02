@@ -85,10 +85,10 @@ export function editProfile(profile) {
 }
 
 export function mapPublicKeyToProfile(publicKey, state) {
-    const filteredProfile = Object.values(state.profiles)
+    const filteredProfiles = Object.values(state.profiles)
         .filter(profile => profile._pk === publicKey)
-    if (filteredProfile.length) {
-        return filteredProfile[0].metaData
+    if (filteredProfiles.length) {
+        return filteredProfiles[0].metaData
     }
     return null
 }
