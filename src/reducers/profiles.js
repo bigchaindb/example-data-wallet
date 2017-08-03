@@ -4,7 +4,7 @@ const profiles = (state = {}, action) => {
         case 'UPDATE_PROFILE':
             return Object.assign({}, state, {
                 ...state,
-                [action.profile._txId]: action.profile
+                [action.profile._assetID]: action.profile
             })
         default:
             return state

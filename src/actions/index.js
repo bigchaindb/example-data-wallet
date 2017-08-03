@@ -25,7 +25,7 @@ export function generateMnemonic() {
     }
 }
 
-export const profileAsset = new Asset(appId, 'profile')
+export const profileAsset = new Asset(appId, 'profile', { name: 'string' })
 
 export function setSeed(seed) {
     localStorage.setItem('seed', seed)
@@ -65,7 +65,7 @@ export function submitProfile(profile) {
     return (dispatch, getState) => {
         const { publicKey } = getState().identity.keypair
 
-        profileAsset.create(profile, dispatch, getState, profile)
+        profileAsset.create(profile, dispatch, getState)
             .then(() => dispatch(push(`/profiles/${publicKey}`)))
     }
 }
@@ -76,7 +76,7 @@ export function editProfile(profile) {
         const state = getState()
         const hasProfile = Object.values(state.profiles)
             .filter(_profile => _profile._pk === state.identity.keypair.publicKey)
-        const txId = hasProfile[0]._txLastId
+        const txId = hasProfile[0]._txId
         bdb.getTransaction(txId).then(tx => {
             profileAsset.transfer(tx, publicKey, profile, dispatch, getState)
                 .then(() => dispatch(push(`/profiles/${publicKey}`)))
