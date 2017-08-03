@@ -2,9 +2,10 @@ import * as bdb from '../bdb' // eslint-disable-line import/no-namespace
 
 
 export default class Asset {
-    constructor(appId, type) {
+    constructor(appId, type, schema) {
         this.appId = appId
         this.assetType = type
+        this.schema = schema
         this.assetCollection = `${this.assetType}s`
         this.dataType = `${this.appId}:${this.assetType}`
     }
@@ -21,18 +22,19 @@ export default class Asset {
             )
     }
 
-    create(assetData, dispatch, getState, metadata = null) {
+    create(metadataPayload, dispatch, getState) {
         const { publicKey, privateKey } = getState().identity.keypair
         const assetPayload = { type: this.dataType }
-        assetPayload[this.assetType] = assetData
-
+        assetPayload[this.assetType] = {
+            type: this.dataType,
+            schema: this.schema
+        }
         return bdb.publish(
             publicKey,
             privateKey,
             assetPayload,
-            {
-                data: metadata
-            })
+            metadataPayload
+        )
             .then(tx => this.updateStore(tx.id, dispatch, getState))
             .catch(err => console.error(err))
     }
@@ -40,15 +42,13 @@ export default class Asset {
     transfer(transaction, toPublicKey, payload, dispatch, getState) {
         const state = getState()
         const { publicKey, privateKey } = state.identity.keypair
+
         return bdb.transfer(
             transaction,
             publicKey,
             privateKey,
             toPublicKey,
-            {
-                type: this.assetType,
-                data: payload
-            }
+            payload
         )
         .then(() => {
             const assetId = bdb.getAssetId(transaction)
@@ -87,7 +87,7 @@ export default class Asset {
                 timestamp: tx.votes[0].vote.timestamp,
                 from: tx.inputs,
                 to: tx.outputs,
-                _tx: tx.id
+                _txId: tx.id
             }
         ))
 
@@ -97,15 +97,19 @@ export default class Asset {
         switch (action) {
             case 'ADD':
                 dispatchObject[this.assetType] = {
-                    ...asset.asset.data[this.assetType],
+                    asset: asset.asset.data[this.assetType],
+                    metaData: unspent.metadata,
                     _pk: asset.inputs[0].owners_before[0],
-                    _tx: asset.id,
+                    _txId: unspent.id,
+                    _assetID: asset.id,
                     provenance
                 }
                 return dispatch(dispatchObject)
             case 'UPDATE':
                 dispatchObject[this.assetType] = {
                     ...state[this.assetCollection][bdb.getAssetId(unspent)],
+                    metaData: unspent.metadata,
+                    _txId: unspent.id,
                     provenance
                 }
                 return dispatch(dispatchObject)

@@ -9,6 +9,7 @@ import ProfileLoader from '../containers/ProfileLoader'
 import MenuLoader from '../containers/MenuLoader'
 import LogoutLoader from '../containers/LogoutLoader'
 import DashboardLoader from '../containers/DashboardLoader'
+import EditLoader from '../containers/EditLoader'
 /* eslint-enable no-unused-vars */
 
 const App = () => (
@@ -19,6 +20,7 @@ const App = () => (
         <Route path="/onboarding" component={ProfileLoader}/>
         <Container>
             <Route path="/profiles/:publicKey" component={DashboardLoader}/>
+            <Route path="/edit/:publicKey" component={EditLoader}/>
             <Route path="/logout" component={LogoutLoader}/>
         </Container>
     </div>

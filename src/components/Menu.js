@@ -11,7 +11,7 @@ export default class AppMenu extends Component {
 
     render() {
         const { activeItem } = this.state
-        const { name, _pk } = this.props
+        const { name, publicKey } = this.props
 
         if (!name) {
             return null
@@ -23,10 +23,16 @@ export default class AppMenu extends Component {
                     Welcome back,&nbsp;<strong>{name}</strong>
                 </Menu.Item>
 
-                <Menu.Item as={Link} to={`/profiles/${_pk}`} name='home'
+                <Menu.Item as={Link} to={`/profiles/${publicKey}`} name='home'
                            active={activeItem === 'home'}
                            onClick={this.handleItemClick}>
                     Home
+                </Menu.Item>
+
+                <Menu.Item as={Link} to={`/edit/${publicKey}`} name='edit'
+                           active={activeItem === 'edit'}
+                           onClick={this.handleItemClick}>
+                    Edit
                 </Menu.Item>
 
                 <Menu.Menu position='right'>
