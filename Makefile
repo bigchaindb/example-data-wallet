@@ -15,15 +15,17 @@ restart: init start
 
 drop_db:
 	docker-compose stop mdb
+	docker-compose stop bdb
 	docker-compose rm -f mdb
 
 start_db:
 	docker-compose up -d mdb
+	docker-compose up -d bdb
 
 run: init start
 
 reinit_db: drop_db start_db
-	sleep 10
+	sleep 1
 
 stop:
 	docker-compose down

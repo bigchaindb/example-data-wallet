@@ -1,5 +1,6 @@
 import { push } from 'react-router-redux'
 import bip39 from 'bip39'
+import moment from 'moment'
 
 import * as bdb from '../bdb' // eslint-disable-line import/no-namespace
 import Asset from './asset'
@@ -26,6 +27,7 @@ export function generateMnemonic() {
 }
 
 export const profileAsset = new Asset(appId, 'profile', { name: 'string' })
+export const datastreamAsset = new Asset(appId, 'datastream', { value: 'object' })
 
 export function setSeed(seed) {
     localStorage.setItem('seed', seed)
@@ -42,23 +44,38 @@ export function setSeed(seed) {
 
         bdb.connect((ev) => {
             profileAsset.updateStore(ev.asset_id, dispatch, getState)
+            datastreamAsset.updateStore(ev.asset_id, dispatch, getState)
         })
 
         dispatch(requestAsync())
         profileAsset.load(dispatch, getState)
             .then(() => {
-                const state = getState()
-                const hasProfile = Object.values(state.profiles)
-                    .filter(profile => profile._pk === state.identity.keypair.publicKey)
-
-                if (hasProfile.length) {
+                if (getActiveProfile(getState())) {
                     dispatch(push(`/profiles/${keypair.publicKey}`))
                 } else {
                     dispatch(push('/onboarding'))
                 }
                 dispatch(receiveAsync())
             })
+            .then(() => {
+                datastreamAsset.load(dispatch, getState)
+            })
     }
+}
+
+export function getActiveProfile(state) {
+    if (state.identity &&
+        state.identity.keypair &&
+        state.profiles) {
+        const { publicKey } = state.identity.keypair
+
+        const activeProfile = Object.values(state.profiles)
+            .filter(_profile => _profile._pk === publicKey)
+        if (activeProfile.length) {
+            return activeProfile[0]
+        }
+    }
+    return null
 }
 
 export function submitProfile(profile) {
@@ -73,11 +90,8 @@ export function submitProfile(profile) {
 export function editProfile(profile) {
     return (dispatch, getState) => {
         const { publicKey } = getState().identity.keypair
-        const state = getState()
-        const hasProfile = Object.values(state.profiles)
-            .filter(_profile => _profile._pk === state.identity.keypair.publicKey)
-        const txId = hasProfile[0]._txId
-        bdb.getTransaction(txId).then(tx => {
+        const activeProfile = getActiveProfile(getState())
+        bdb.getTransaction(activeProfile._txId).then(tx => {
             profileAsset.transfer(tx, publicKey, profile, dispatch, getState)
                 .then(() => dispatch(push(`/profiles/${publicKey}`)))
         })
@@ -96,4 +110,28 @@ export function mapPublicKeyToProfile(publicKey, state) {
 export function logout() {
     localStorage.clear()
     window.location.href = '/'
+}
+
+
+export function submitDatastream(value) {
+    return (dispatch, getState) => {
+        const data = {
+            time: moment.now(),
+            value
+        }
+        datastreamAsset.create(data, dispatch, getState)
+    }
+}
+
+export function editDatastream(txId, value) {
+    return (dispatch, getState) => {
+        const { publicKey } = getState().identity.keypair
+        const data = {
+            time: moment.now(),
+            value
+        }
+        bdb.getTransaction(txId).then(tx => {
+            datastreamAsset.transfer(tx, publicKey, data, dispatch, getState)
+        })
+    }
 }

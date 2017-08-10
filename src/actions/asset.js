@@ -43,18 +43,19 @@ export default class Asset {
         const state = getState()
         const { publicKey, privateKey } = state.identity.keypair
 
-        return bdb.transfer(
-            transaction,
-            publicKey,
-            privateKey,
-            toPublicKey,
-            payload
-        )
-        .then(() => {
-            const assetId = bdb.getAssetId(transaction)
-            this.updateStore(assetId, dispatch, getState)
-        })
-        .catch((err) => console.error(err))
+        return bdb
+            .transfer(
+                transaction,
+                publicKey,
+                privateKey,
+                toPublicKey,
+                payload
+            )
+            .then(() => {
+                const assetId = bdb.getAssetId(transaction)
+                this.updateStore(assetId, dispatch, getState)
+            })
+            .catch((err) => console.error(err))
     }
 
     updateStore(assetId, dispatch, getState) { // eslint-disable-line

@@ -5,6 +5,7 @@ import { routerReducer } from 'react-router-redux'
 import identity from './identity'
 import profiles from './profiles'
 import async from './async'
+import datastreams from './datastreams'
 
 
 const appReducer = combineReducers({
@@ -12,7 +13,8 @@ const appReducer = combineReducers({
     router: routerReducer,
     identity,
     async,
-    profiles
+    profiles,
+    datastreams
 })
 
 export default appReducer
