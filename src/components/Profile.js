@@ -13,8 +13,9 @@ const Profile = ({ handleSubmit }) => (
             <Form onSubmit={handleSubmit} autoComplete="off">
                 <Form.Field>
                     <label>Name</label>
-                    <Field name="name" component="input" required
-                           type="text" placeholder='Your name or your company name' />
+                    <Field
+                        name="name" component="input" required
+                        type="text" placeholder='Your name or your company name' />
                 </Form.Field>
                 <Button primary type='submit'>Sign and submit</Button>
                 <Button as='a' href='/logout'>Reset session</Button>

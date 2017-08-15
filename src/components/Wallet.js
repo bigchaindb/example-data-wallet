@@ -1,74 +1,42 @@
-/* eslint-disable no-unused-vars */
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Field, reduxForm } from 'redux-form'
-import { Button, Form } from 'semantic-ui-react'
-/* eslint-enable no-unused-vars */
+import React from 'react'
 
-class Wallet extends Component {
-    // TODO: read activeItem from URL or smth
-    state = { generated: false }
+import DatastreamCard from './DatastreamCard'
 
-    handleGenerated = () => {
-        this.setState({ generated: true })
-        this.props.onGenerateMnemonic()
-    }
 
-    render() {
-        const {
-            handleSubmit,
-            isFetching
-        } = this.props
-        const { generated } = this.state
-
-        if (isFetching) {
-            return (
-                <div className="full-page">
-                    <div className="main--white">
-                        <div className="cssload-spinner" />
+const Wallet = (
+    {
+        name,
+        publicKey,
+        datastreams,
+        handleCreateDatastream,
+        handleClickDatastream
+    }) => (
+    <div>
+        <h1>{name}</h1>
+        <h3>{publicKey}</h3>
+        <hr/>
+        <div>
+            <div className="datastream-container">
+                <div className="datastream-grid">
+                    <div
+                        className="datastream-item-container datastream-item-add"
+                        onClick={() => handleCreateDatastream(Math.random())}>
+                        <div className="datastream-item">
+                            +
+                        </div>
                     </div>
-                </div>
-            )
-        }
-
-        return (
-            <div className="full-page">
-                <div className="main">
-                    <h1>Passphrase</h1>
-                    <Form onSubmit={handleSubmit} autoComplete="off">
-                        <Form.Field>
-                            <label>Passphrase</label>
-                            <Field name="seed" component="input" type="text"
-                                   placeholder='update fade car…' autoComplete="off" />
-                        </Form.Field>
-
-                        {
-                            generated ? <p>These 12 words allow you to enter your account.
-                                Save them somewhere safe and secret.</p> : null
-                        }
-
-                        <Button className="button primary" type='submit'>Submit</Button>
-                        <Button type='button'
-                                onClick={this.handleGenerated.bind(this)}>
-                            Generate a new wallet
-                        </Button>
-                    </Form>
-
+                    {
+                        datastreams.map(datastream =>
+                            <DatastreamCard
+                                datastream={datastream}
+                                onClick={() => handleClickDatastream(datastream._assetId)}
+                                key={datastream._txId}/>
+                        )
+                    }
                 </div>
             </div>
-        )
-    }
-}
+        </div>
+    </div>
+)
 
-Wallet.propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-    onGenerateMnemonic: PropTypes.func.isRequired
-}
-
-const WalletForm = reduxForm({
-    form: 'wallet',
-    enableReinitialize: true
-})(Wallet)
-
-
-export default WalletForm
+export default Wallet

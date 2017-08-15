@@ -1,17 +1,31 @@
 import React from 'react'
-import { Button } from 'semantic-ui-react'
+import moment from 'moment'
 
 
 const DatastreamCard = ({ datastream, onClick }) => (
     <div
         className="datastream-item-container"
-        style={{ backgroundColor: datastream.metaData.value }}
         onClick={onClick}>
         <div className="datastream-item">
-            {datastream._txId}
-            {datastream.metaData.time}
+            <div className="datastream-item-card .datastream-item-card-header">
+                { datastream._txId }
+            </div>
+            <div className="datastream-item-card datastream-item-card-body">
+                { datastream.metadata.value }
+            </div>
+            <div className="datastream-item-card datastream-item-card-footer">
+                {
+                    moment
+                        .unix(datastream.metadata.time / 1000)
+                        .format('YYYY-MM-DD HH:mm:ss')
+                }
+            </div>
         </div>
     </div>
 )
+// eslint-disable-next-line
+
 
 export default DatastreamCard
+
+

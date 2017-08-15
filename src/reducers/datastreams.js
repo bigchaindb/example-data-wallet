@@ -4,7 +4,7 @@ const datastreams = (state = {}, action) => {
         case 'UPDATE_DATASTREAM':
             return Object.assign({}, state, {
                 ...state,
-                [action.datastream._assetID]: action.datastream
+                [action.datastream._assetId]: action.datastream
             })
         default:
             return state

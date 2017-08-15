@@ -23,22 +23,25 @@ export default class AppMenu extends Component {
                     Welcome back,&nbsp;<strong>{name}</strong>
                 </Menu.Item>
 
-                <Menu.Item as={Link} to={`/profiles/${publicKey}`} name='home'
-                           active={activeItem === 'home'}
-                           onClick={this.handleItemClick}>
+                <Menu.Item
+                    as={Link} to={`/profiles/${publicKey}`} name='home'
+                    active={activeItem === 'home'}
+                    onClick={this.handleItemClick}>
                     Home
                 </Menu.Item>
 
-                <Menu.Item as={Link} to={`/edit/${publicKey}`} name='edit'
-                           active={activeItem === 'edit'}
-                           onClick={this.handleItemClick}>
-                    Edit
+                <Menu.Item
+                    as={Link} to={`/profiles/${publicKey}/edit`} name='edit'
+                    active={activeItem === 'edit'}
+                    onClick={this.handleItemClick}>
+                    Edit Profile
                 </Menu.Item>
 
                 <Menu.Menu position='right'>
-                    <Menu.Item as={Link} to="/logout" name='logout'
-                               active={activeItem === 'logout'}
-                               onClick={this.handleItemClick} />
+                    <Menu.Item
+                        as={Link} to="/logout" name='logout'
+                        active={activeItem === 'logout'}
+                        onClick={this.handleItemClick} />
                 </Menu.Menu>
             </Menu>
         )

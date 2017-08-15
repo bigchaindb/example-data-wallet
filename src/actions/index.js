@@ -102,7 +102,7 @@ export function mapPublicKeyToProfile(publicKey, state) {
     const filteredProfiles = Object.values(state.profiles)
         .filter(profile => profile._pk === publicKey)
     if (filteredProfiles.length) {
-        return filteredProfiles[0].metaData
+        return filteredProfiles[0].metadata
     }
     return null
 }

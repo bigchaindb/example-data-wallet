@@ -18,7 +18,7 @@ const Landing = () => (
                 </ul>
             </p>
 
-            <Button primary as={Link} to="/wallet">
+            <Button primary as={Link} to="/passphrase">
                 Connect to your digital wallet.
             </Button>
         </div>

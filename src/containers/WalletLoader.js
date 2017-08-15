@@ -1,25 +1,23 @@
 import { connect } from 'react-redux'
-
-import { generateMnemonic, setSeed } from '../actions'
-import WalletForm from '../components/Wallet'
-
+import { push } from 'react-router-redux'
+import Wallet from '../components/Wallet'
+import {
+    mapPublicKeyToProfile,
+    submitDatastream,
+} from '../actions/index'
 
 export default connect(
 
-    state => ({
-        ...state.async,
-        initialValues: {
-            seed: state.identity.seed,
-        }
-
+    (state, ownProps) => ({
+        ...mapPublicKeyToProfile(ownProps.match.params.publicKey, state),
+        datastreams: Object.values(state.datastreams),
+        publicKey: ownProps.match.params.publicKey,
     }),
 
     dispatch => ({
-        onSubmit: values => {
-            dispatch(setSeed(values.seed))
-        },
-
-        onGenerateMnemonic: () => dispatch(generateMnemonic())
+        onMount: () => {},
+        handleCreateDatastream: (value) => dispatch(submitDatastream(value)),
+        handleClickDatastream: (txId) => dispatch(push(`/datastreams/${txId}`))
     })
 
-)(WalletForm)
+)(Wallet)

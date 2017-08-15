@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form'
 import { Button, Form } from 'semantic-ui-react'
 /* eslint-enable no-unused-vars */
 
-const Edit = ({ handleSubmit }) => (
+const EditProfile = ({ handleSubmit }) => (
     <div className="main--white">
         <h1>Edit your public profile</h1>
         <Form onSubmit={handleSubmit} autoComplete="off">
@@ -19,13 +19,13 @@ const Edit = ({ handleSubmit }) => (
     </div>
 )
 
-Edit.propTypes = {
+EditProfile.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
 }
 
-const EditForm = reduxForm({
+const EditProfileForm = reduxForm({
     form: 'edit'
-})(Edit)
+})(EditProfile)
 
 
-export default EditForm
+export default EditProfileForm

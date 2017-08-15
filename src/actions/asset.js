@@ -99,17 +99,17 @@ export default class Asset {
             case 'ADD':
                 dispatchObject[this.assetType] = {
                     asset: asset.asset.data[this.assetType],
-                    metaData: unspent.metadata,
+                    metadata: unspent.metadata,
                     _pk: asset.inputs[0].owners_before[0],
                     _txId: unspent.id,
-                    _assetID: asset.id,
+                    _assetId: asset.id,
                     provenance
                 }
                 return dispatch(dispatchObject)
             case 'UPDATE':
                 dispatchObject[this.assetType] = {
                     ...state[this.assetCollection][bdb.getAssetId(unspent)],
-                    metaData: unspent.metadata,
+                    metadata: unspent.metadata,
                     _txId: unspent.id,
                     provenance
                 }

@@ -2,9 +2,9 @@ import React from 'react'
 import { Container } from 'semantic-ui-react'
 
 import Landing from './Landing'
-import Dashboard from './Dashboard'
+import Wallet from './Wallet'
 
 
-const Home = ({ name }) => name ? <Container><Dashboard /></Container> : <Landing />
+const Home = ({ name }) => name ? <Container><Wallet /></Container> : <Landing />
 
 export default Home

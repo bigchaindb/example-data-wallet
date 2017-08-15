@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import { editProfile } from '../actions'
-import EditForm from '../components/Edit'
+import EditProfileForm from '../components/EditProfile'
 
 
 export default connect(
@@ -16,4 +16,4 @@ export default connect(
         }
     })
 
-)(EditForm)
+)(EditProfileForm)

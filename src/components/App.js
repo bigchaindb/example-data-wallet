@@ -4,24 +4,26 @@ import { Route } from 'react-router-dom'
 import { Container } from 'semantic-ui-react'
 
 import HomeLoader from '../containers/HomeLoader'
-import WalletLoader from '../containers/WalletLoader'
+import PassphraseLoader from '../containers/PassphraseLoader'
 import ProfileLoader from '../containers/ProfileLoader'
 import MenuLoader from '../containers/MenuLoader'
 import LogoutLoader from '../containers/LogoutLoader'
-import DashboardLoader from '../containers/DashboardLoader'
-import EditLoader from '../containers/EditLoader'
+import WalletLoader from '../containers/WalletLoader'
+import EditProfileLoader from '../containers/EditProfileLoader'
+import DatastreamLoader from '../containers/DatastreamLoader'
 /* eslint-enable no-unused-vars */
 
 const App = () => (
     <div>
         <MenuLoader />
         <Route exact path="/" component={HomeLoader}/>
-        <Route path="/wallet" component={WalletLoader}/>
+        <Route path="/passphrase" component={PassphraseLoader}/>
         <Route path="/onboarding" component={ProfileLoader}/>
         <Container>
-            <Route path="/profiles/:publicKey" component={DashboardLoader}/>
-            <Route path="/edit/:publicKey" component={EditLoader}/>
+            <Route exact path="/profiles/:publicKey" component={WalletLoader}/>
+            <Route path="/profiles/:publicKey/edit" component={EditProfileLoader}/>
             <Route path="/logout" component={LogoutLoader}/>
+            <Route exact path="/datastreams/:transactionId" component={DatastreamLoader}/>
         </Container>
     </div>
 )
