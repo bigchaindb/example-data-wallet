@@ -24,7 +24,7 @@ class Datastream extends Component {
                 <div
                     className="datastream-epoch datastream-epoch-add"
                     onClick={() => onClick(datastream._txId, Math.random())} >
-                    + Generate random datapoint
+                    + Generate randomish datapoint
                 </div>
                 {
                     datastream.provenance
@@ -32,7 +32,7 @@ class Datastream extends Component {
                         .map(epoch => (
                             <div
                                 className="datastream-epoch"
-                                key={epoch.txId}>
+                                key={epoch._txId}>
                                 <span>
                                     {
                                         moment
