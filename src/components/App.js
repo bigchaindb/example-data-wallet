@@ -10,6 +10,7 @@ import MenuLoader from '../containers/MenuLoader'
 import LogoutLoader from '../containers/LogoutLoader'
 import WalletLoader from '../containers/WalletLoader'
 import EditProfileLoader from '../containers/EditProfileLoader'
+import NewTransactionLoader from '../containers/NewTransactionLoader'
 import DatastreamLoader from '../containers/DatastreamLoader'
 /* eslint-enable no-unused-vars */
 
@@ -22,6 +23,7 @@ const App = () => (
         <Container>
             <Route exact path="/profiles/:publicKey" component={WalletLoader}/>
             <Route path="/profiles/:publicKey/edit" component={EditProfileLoader}/>
+            <Route path="/transaction/:publicKey/new" component={NewTransactionLoader}/>
             <Route path="/logout" component={LogoutLoader}/>
             <Route exact path="/datastreams/:transactionId" component={DatastreamLoader}/>
         </Container>

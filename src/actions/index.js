@@ -98,6 +98,24 @@ export function editProfile(profile) {
     }
 }
 
+export function NewTransaction(payload) {
+    return (dispatch, getState) => {
+        const { publicKey } = getState().identity.keypair
+        const activeProfile = getActiveProfile(getState())
+        console.log(activeProfile,'found!',payload);
+        const data = {
+            time: moment.now(),
+            payload
+        }
+        datastreamAsset.create(data, dispatch, getState)
+            .then(() => dispatch(push(`/profiles/${publicKey}`)));
+        // bdb.getTransaction(activeProfile._txId).then(tx => {
+        //     profileAsset.transfer(tx, publicKey, profile, dispatch, getState)
+        //         .then(() => dispatch(push(`/profiles/${publicKey}`)))
+        // })
+    }
+}
+
 export function mapPublicKeyToProfile(publicKey, state) {
     const filteredProfiles = Object.values(state.profiles)
         .filter(profile => profile._pk === publicKey)
