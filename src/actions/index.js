@@ -109,10 +109,7 @@ export function NewTransaction(payload) {
         }
         datastreamAsset.create(data, dispatch, getState)
             .then(() => dispatch(push(`/profiles/${publicKey}`)));
-        // bdb.getTransaction(activeProfile._txId).then(tx => {
-        //     profileAsset.transfer(tx, publicKey, profile, dispatch, getState)
-        //         .then(() => dispatch(push(`/profiles/${publicKey}`)))
-        // })
+            
     }
 }
 

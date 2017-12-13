@@ -187,7 +187,7 @@ body {
 
 .datastream-item-container {
 	position: relative;
-    width: 200px;
+    min-width: 200px;
     height: 200px;
 	border: 2px solid white;
 	cursor: pointer;
@@ -195,8 +195,8 @@ body {
 
 .datastream-item {
 	height: 100%;
-	background-color: #B581CF;
-	border: 1px solid #B581CF;
+	background-color: #3194ab;
+	border: 1px solid #3194ab;
 	color: white;
 }
 
