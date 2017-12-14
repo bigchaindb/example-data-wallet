@@ -12,10 +12,9 @@ its not strictly decentralized.
 # Architecture
 
 1. DbChain on BigChainDb (ES BE no Mongo)
-2. bdbnode (which you can use to post transactions to the network )
+2. bdbnode (which you can use to post transactions to the network ) also work as validatornodes
 3. searchnode (ES cluster interface)
 4. ledgernode (Coin Transactions)
-5. validatornodes (Validate Transactions into the NetWork)
 
 ## FAQ
 
