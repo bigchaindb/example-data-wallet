@@ -25,7 +25,7 @@ const Wallet = (
                             +
                         </div>
                     </div>
-                    {
+                    {   
                         datastreams.map(datastream =>
                             <DatastreamCard
                                 datastream={datastream}

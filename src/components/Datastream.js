@@ -6,6 +6,7 @@ class Datastream extends Component {
     render() {
         const {
             datastream,
+            owner,
             onClick
         } = this.props
 
@@ -20,6 +21,7 @@ class Datastream extends Component {
         return (
             <div className="datastream-container">
                 <h3>{ datastream._assetId }</h3>
+                <p>This Asset is owned by {owner.name}</p>
                 <hr />
                 <div
                     className="datastream-epoch datastream-epoch-add"
