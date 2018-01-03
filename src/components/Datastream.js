@@ -21,6 +21,8 @@ class Datastream extends Component {
         return (
             <div className="datastream-container">
                 <h3>{ datastream._assetId }</h3>
+                <p>{datastream.metadata.payload.title}</p>
+                <p>{datastream.metadata.payload.bio}</p>
                 <p>This Asset is owned by {owner.name}</p>
                 <hr />
                 <div

@@ -5,11 +5,15 @@
   "dependencies": {
     "bigchaindb-driver": "^0.3.0",
     "bip39": "^2.3.1",
+    "boldr-editor": "^0.6.0",
+    "font-awesome": "^4.7.0",
     "marked": "^0.3.6",
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-markdown": "^3.1.4",
+    "react-mde": "^2.3.2",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
@@ -17,10 +21,12 @@
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-form": "^6.8.0",
+    "redux-forms-markdown-editor": "^1.1.5",
     "redux-thunk": "^2.2.0",
     "safe-access": "^0.1.0",
     "semantic-ui-css": "^2.2.10",
     "semantic-ui-react": "^0.68.5",
+    "showdown": "^1.8.6",
     "simple-websocket": "^5.0.2"
   },
   "devDependencies": {

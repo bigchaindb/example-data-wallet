@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
 import { Button, Form } from 'semantic-ui-react'
+import ReactMDE from 'redux-forms-markdown-editor';
 /* eslint-enable no-unused-vars */
 
 const NewTransaction = ({ handleSubmit }) => (
@@ -14,6 +15,14 @@ const NewTransaction = ({ handleSubmit }) => (
                 <Field name="title" component="input" required
                        type="text" placeholder='Something unique!' />
             </Form.Field>
+            <div>
+            <label>Bio</label>
+            <Field
+              name="bio"
+              component={ReactMDE}
+              placeholder="More info about yourself"
+            />
+          </div>
             <Button primary type='submit'>Save</Button>
         </Form>
     </div>
