@@ -37,6 +37,13 @@ export default class AppMenu extends Component {
                     Edit Profile
                 </Menu.Item>
 
+                <Menu.Item
+                    as={Link} to={`/transaction/${publicKey}/new`} name='new'
+                    active={activeItem === 'new'}
+                    onClick={this.handleItemClick}>
+                    New Transaction
+                </Menu.Item>
+
                 <Menu.Menu position='right'>
                     <Menu.Item
                         as={Link} to="/logout" name='logout'

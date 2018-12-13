@@ -6,6 +6,7 @@ class Datastream extends Component {
     render() {
         const {
             datastream,
+            owner,
             onClick
         } = this.props
 
@@ -20,11 +21,14 @@ class Datastream extends Component {
         return (
             <div className="datastream-container">
                 <h3>{ datastream._assetId }</h3>
+                <p>{datastream.metadata.payload.title}</p>
+                <p>{datastream.metadata.payload.bio}</p>
+                <p>This Asset is owned by {owner.name}</p>
                 <hr />
                 <div
                     className="datastream-epoch datastream-epoch-add"
                     onClick={() => onClick(datastream._txId, Math.random())} >
-                    + Generate random datapoint
+                    + Generate randomish datapoint
                 </div>
                 {
                     datastream.provenance
@@ -32,7 +36,7 @@ class Datastream extends Component {
                         .map(epoch => (
                             <div
                                 className="datastream-epoch"
-                                key={epoch.txId}>
+                                key={epoch._txId}>
                                 <span>
                                     {
                                         moment

@@ -11,7 +11,8 @@ const DatastreamCard = ({ datastream, onClick }) => (
                 { datastream._txId }
             </div>
             <div className="datastream-item-card datastream-item-card-body">
-                { datastream.metadata.value }
+                <pre>{ datastream.metadata.payload ? 
+                    datastream.metadata.payload.title : datastream.metadata.value }</pre>
             </div>
             <div className="datastream-item-card datastream-item-card-footer">
                 {
